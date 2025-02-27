@@ -1,5 +1,6 @@
 package br.com.victor.learning_spring;
 
+import br.com.victor.learning_spring.menu.Menu;
 import br.com.victor.learning_spring.models.DadosEpisodio;
 import br.com.victor.learning_spring.models.DadosSeries;
 import br.com.victor.learning_spring.models.DadosTemporada;
@@ -25,6 +26,8 @@ public class LearningSpringApplication implements CommandLineRunner {
 		BufferedReader leitorArquivo = new BufferedReader(arquivo); // Lê o arquivo
 
 		String apikey = leitorArquivo.readLine(); // Armazena a chave da API
+
+		Menu menu = new Menu();
 
 		String url = "http://www.omdbapi.com/?apikey=" + apikey + "&t=the+walking+dead&season=1";
 
