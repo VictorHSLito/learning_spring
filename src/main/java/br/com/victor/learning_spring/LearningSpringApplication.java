@@ -19,15 +19,5 @@ public class LearningSpringApplication implements CommandLineRunner {
 	public void run(String... args) throws Exception {
 
 		Menu menu = new Menu();
-
-		ConectaAPI conexao = new ConectaAPI(); // Cria uma nova conexão
-		String json = conexao.obterDados(menu.getUrl()); // A partir da conexão gerada, armazena o json
-
-		ConverteDados conversor = new ConverteDados();
-
-
-		DadosSeries serie = conversor.obterDados(json, DadosSeries.class); // Converte esse json para os moldes de uma classe com o conversor
-
-		System.out.println(serie); // Mostra os dados formatados com o toString()
 	}
 }

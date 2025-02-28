@@ -11,6 +11,6 @@ public record DadosTemporada(@JsonAlias("Season") int numero,
     @Override
     public String toString() {
         return "Temporada número: " + numero +
-                ", Episódios" + episodiosArray + '}';
+                ", Episódios" + episodiosArray + "}\n";
     }
 }
