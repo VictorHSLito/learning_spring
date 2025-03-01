@@ -3,7 +3,7 @@ package br.com.victor.learning_spring.service;
 import java.util.Scanner;
 
 public class InputUsuario {
-    private final Scanner sc = new Scanner(System.in);
+    private static final Scanner sc = new Scanner(System.in);
 
     public String obterNomeSerie() {
         System.out.println("Digite o nome da série que deseja fazer uma consulta:");
@@ -36,5 +36,14 @@ public class InputUsuario {
             }
         } while (!(resposta.equals("não") || resposta.equals("n")));
         return temporada;
+    }
+
+    public static String obterResposta() {
+        String resposta;
+        System.out.println("Gostaria de saber quais são os 5 melhores episódios dessa série? [s/n]");
+        do {
+            resposta = sc.nextLine();
+        } while ((resposta.equals("S") || resposta.equals("N")));
+        return resposta;
     }
 }
