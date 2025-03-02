@@ -3,6 +3,7 @@ package br.com.victor.learning_spring.menu;
 import br.com.victor.learning_spring.models.DadosEpisodio;
 import br.com.victor.learning_spring.models.DadosSeries;
 import br.com.victor.learning_spring.models.DadosTemporada;
+import br.com.victor.learning_spring.models.Episodio;
 import br.com.victor.learning_spring.service.InputUsuario;
 import br.com.victor.learning_spring.service.ServicoAPI;
 
@@ -66,11 +67,18 @@ public class Menu {
                 .flatMap(t -> t.episodiosArray().stream())
                 .collect(Collectors.toList()); // Extrai informações das temporadas e cria um novo array
 
+        System.out.println("Top 5 Episódios:");
         dadosEpisodios.stream()
                 .sorted(Comparator.comparing(DadosEpisodio::rating).reversed())
                 .filter(e -> !e.rating().equalsIgnoreCase("N/A"))
                 .limit(5)
                 .forEach(System.out::println); // A partir desse novo array de episódios, filtra os 5 melhores
-    }
 
+        List<Episodio> episodios = temporadasList.stream()
+                .flatMap(t -> t.episodiosArray().stream()
+                        .map(d -> new Episodio(t.numero(),d)))
+                .collect(Collectors.toList());
+
+        episodios.forEach(System.out::println);
+    }
 }
