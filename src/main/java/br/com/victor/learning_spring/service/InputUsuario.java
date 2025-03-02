@@ -40,7 +40,6 @@ public class InputUsuario {
 
     public static String obterResposta() {
         String resposta;
-        System.out.println("Gostaria de saber quais são os 5 melhores episódios dessa série? [s/n]");
         do {
             resposta = sc.nextLine();
         } while ((resposta.equals("S") || resposta.equals("N")));

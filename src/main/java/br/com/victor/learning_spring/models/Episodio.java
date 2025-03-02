@@ -2,7 +2,6 @@ package br.com.victor.learning_spring.models;
 
 import java.time.DateTimeException;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 
 public class Episodio {
     private String nomeEpisodio;
