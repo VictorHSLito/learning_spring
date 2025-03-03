@@ -8,36 +8,28 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class EstatisticaAPI {
-    public void listaTodosEpisodios(List<DadosTemporada> temporadasList) {
-        List<Episodio> episodios = temporadasList.stream()
-                .flatMap(t -> t.episodiosArray().stream()
-                        .map(d -> new Episodio(t.numero(),d)))
-                .collect(Collectors.toList());
 
-        episodios.forEach(System.out::println);
+    private List<DadosTemporada> temporadasEst = new ArrayList<>();
+    private List<Episodio> episodiosEst = new ArrayList<>();
+
+    public void listaTodosEpisodios() {
+        episodiosEst.forEach(System.out::println);
     }
 
-    public void mediaPorTemporada(List<DadosTemporada> temporadasList) {
-        List<Episodio> episodios = temporadasList.stream()
-                .flatMap(t -> t.episodiosArray().stream()
-                        .map(d -> new Episodio(t.numero(),d)))
-                .collect(Collectors.toList());
-
+    public void mediaPorTemporada() {
         System.out.println("Média por temporada: ");
-        Map<Integer, Double> avaliacaoPorTemporada = episodios.stream()
+        Map<Integer, Double> avaliacaoPorTemporada = episodiosEst.stream()
                 .filter(e -> e.getRating() != null && e.getRating() > 0.0)
                 .collect(Collectors.groupingBy(Episodio::getTemporadaEpisodio,
                         Collectors.averagingDouble(Episodio::getRating)));
 
         System.out.println(avaliacaoPorTemporada);
-
-        exibeEstatiscas(episodios);
     }
 
-    public void listaMelhoresEpisodios(List<DadosTemporada> temporadasList) {
+    public void listaMelhoresEpisodios() {
         System.out.println("Top 5 Episódios:");
 
-        List<DadosEpisodio> dadosEpisodios = temporadasList.stream()
+        List<DadosEpisodio> dadosEpisodios = temporadasEst.stream()
                         .flatMap(t -> t.episodiosArray().stream())
                                 .collect(Collectors.toList());
         dadosEpisodios.stream()
@@ -47,8 +39,8 @@ public class EstatisticaAPI {
                 .forEach(System.out::println); // A partir desse novo array de episódios, filtra os 5 melhores
     }
 
-    public void exibeEstatiscas(List<Episodio> episodios) {
-        DoubleSummaryStatistics estatiscas = episodios.stream()
+    public void exibeEstatiscas() {
+        DoubleSummaryStatistics estatiscas = episodiosEst.stream()
                 .filter(e ->e.getRating() != null && e.getRating() > 0.0)
                 .collect(Collectors.summarizingDouble(Episodio::getRating));
 
@@ -56,5 +48,17 @@ public class EstatisticaAPI {
         System.out.println("Maior nota de um episódio da série: " + estatiscas.getMax());
         System.out.println("Menor nota de um episódio da série: " + estatiscas.getMin());
         System.out.println("Total de episódios da série: " + estatiscas.getCount());
+    }
+
+    public void defineArrayTemporadas(List<DadosTemporada> temporadas) {
+        this.temporadasEst = temporadas;
+        defineArrayEpisodios();
+    }
+
+    public void defineArrayEpisodios() {
+        this.episodiosEst = temporadasEst.stream()
+                .flatMap(t -> t.episodiosArray().stream()
+                        .map(d -> new Episodio(t.numero(), d)))
+                .collect(Collectors.toList());
     }
 }

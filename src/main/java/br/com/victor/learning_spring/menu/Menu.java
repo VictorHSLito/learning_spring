@@ -7,7 +7,6 @@ import br.com.victor.learning_spring.service.InputUsuario;
 import br.com.victor.learning_spring.service.ServicoAPI;
 
 import java.io.IOException;
-import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,11 +16,10 @@ public class Menu {
     private String nome;
     private int episodio = 0;
     private int temporada = 0;
-    private String url;
+    private static String url;
 
     private final InputUsuario inputService = new InputUsuario();
     private final ServicoAPI apiService = new ServicoAPI();
-
     private final EstatisticaAPI estatistica = new EstatisticaAPI();
 
     public Menu() throws IOException, InterruptedException {
@@ -52,27 +50,38 @@ public class Menu {
             }
             temporadas.forEach(System.out::println);
 
+            estatistica.defineArrayTemporadas(temporadas);
+
             System.out.println("Gostaria de saber quais são os 5 melhores episódios dessa série? [s/n]");
 
             if (obterResposta().equals("s")) {
-                estatistica.listaMelhoresEpisodios(temporadas);
+                estatistica.listaMelhoresEpisodios();
             }
 
             System.out.println("Gostaria de obter dados detalhados de cada episódio da série? [s/n]");
 
             if (obterResposta().equals("s")) {
-                estatistica.listaTodosEpisodios(temporadas);
+                estatistica.listaTodosEpisodios();
             }
 
             System.out.println("Gostaria de saber a média das notas por temporada? [s/n]");
 
             if (obterResposta().equals("s")) {
-                estatistica.mediaPorTemporada(temporadas);
+                estatistica.mediaPorTemporada();
             }
 
+            System.out.println("Gostaria de ver as estatísticas dessa séries? [s/n]");
+
+            if (obterResposta().equals("s")) {
+                estatistica.exibeEstatiscas();
+            }
         } else {
             DadosSeries serie = apiService.obterDadosSeries(url);
             System.out.println(serie);
         }
+    }
+
+    public static String getUrl() {
+        return url;
     }
 }
